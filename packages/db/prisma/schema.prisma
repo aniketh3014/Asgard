@@ -8,18 +8,45 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
+  id          String      @id @default(uuid())
   email       String?  @unique
-  name        String? 
+  name        String 
   number      String  @unique
   password    String
+  OnRampTransaction OnRampTransaction[]
+  Balance     Balance[]
 }
 
 model Merchant {
-  id          Int     @id @default(autoincrement())
+  id          String     @id @default(uuid())
   email       String  @unique
-  name        String?
+  name        String
   auth_type   AuthType   
+}
+
+model OnRampTransaction {
+  id          String @id @default(uuid())
+  status      OnRampStatus
+  token       String
+  peovider    String
+  amount      Int
+  startTime   DateTime
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+}
+
+model Balance {
+  id          String @id @default(uuid())
+  userId      String @unique
+  amount      Int
+  locked      Int
+  user        User        @relation(fields: [userId], references: [id])
+}
+
+enum OnRampStatus {
+  Success
+  Failure
+  Processing
 }
 
 enum AuthType {
