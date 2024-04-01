@@ -7,6 +7,7 @@ export const authOptions = {
       CredentialsProvider({
           name: 'Credentials',
           credentials: {
+            name: { label: "Full name", type: "text", placeholder: "Name" },
             phone: { label: "Phone number", type: "text", placeholder: "1231231231", required: true },
             password: { label: "Password", type: "password", required: true }
           },
@@ -26,7 +27,7 @@ export const authOptions = {
                     return {
                         id: existingUser.id.toString(),
                         name: existingUser.name,
-                        email: existingUser.number
+                        number: existingUser.number
                     }
                 }
                 return null;
@@ -35,6 +36,7 @@ export const authOptions = {
             try {
                 const user = await db.user.create({
                     data: {
+                        name: credentials.name,
                         number: credentials.phone,
                         password: hashedPassword
                     }
@@ -43,7 +45,7 @@ export const authOptions = {
                 return {
                     id: user.id.toString(),
                     name: user.name,
-                    email: user.number
+                    number: user.number
                 }
             } catch(e) {
                 console.error(e);
@@ -57,8 +59,8 @@ export const authOptions = {
     callbacks: {
         // TODO: can u fix the type here? Using any is bad
         async session({ token, session }: any) {
-            session.user.id = token.sub
-
+            session.user.id = token.sub;
+            session.user.number = token.number;
             return session
         }
     }
