@@ -4,7 +4,6 @@ interface AppbarProps {
     user?: {
         name?: string | null;
     },
-    // TODO: can u figure out what the type should be here?
     onSignin: any,
     onSignout: any
 }
@@ -14,8 +13,8 @@ export const Appbar = ({
     onSignin,
     onSignout
 }: AppbarProps) => {
-    return <div className="flex justify-between border-b px-4">
-        <div className="text-lg flex flex-col justify-center">
+    return <div className="flex justify-between border-b px-4 py-2">
+        <div className="text-2xl font-semibold text-gray-700 flex flex-col justify-center">
             PayTM
         </div>
         <div className="flex flex-col justify-center pt-2">

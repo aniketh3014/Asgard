@@ -55,3 +55,5 @@ app.post("/sbihook", async(req, res) => {
     }
     
 })
+
+app.listen(3003);
